@@ -40,7 +40,7 @@
 class FiberCtrl : public LaserController {
 	public:
 		FiberCtrl();
-    void begin(int ShReg_Data_PIN, int ShReg_Clock_PIN, int SHReg_Latch_PIN, int Laser_Latch, int Laser_Enable, int MO_enable, int Amp_enable, int PRF_pin, int guide_pin, int alarm_0, int alarm_1);
+    void begin(int PWM_OUT_Pin, int PSU_SSR_Pin);
     void stop(void);
     bool isInitiallized();
     bool isHalted();
@@ -93,16 +93,18 @@ void set5kPWM() {
   analogWrite(laserPWM_OUT_Pin, Synrad48Ctrl::ticklePWM); //Output Trickle
 }
 */
+
 void setPower(int Power){
   if((0 < Power)||(Power < 255)){
     //invalid power? do i print an error here?
   }else{
     //include a correct spi library
+    byte data = (byte)Power;
     SPISettings settings(1000000, MSBFIRST, SPI_MODE0);
     SPI.beginTransaction(settings);
     digitalWrite(Laser_SHReg_Latch_PIN, LOW);
     digitalWrite(Laser_Latch_PIN, LOW);
-    SPI.transfer(Power); //how does type casting int to byte work help
+    SPI.transfer(data); //hope does type casting works
     digitalWrite(Laser_SHReg_Latch_PIN, HIGH);
     //do i need a small delay here?
     digitalWrite(Laser_Latch_PIN, HIGH);

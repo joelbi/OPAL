@@ -26,7 +26,18 @@
   
   #define LASER_SSR_OUT_PIN 2
   #define GALVO_SSR_OUT_PIN 3
-
   #define LASER_PWM_OUT_PIN 6
+  //placeholderpin number, do chnage
+  
+  #define SHReg_Latch_PIN 1
+  #define Laser_Latch 4
+  #define Laser_Enable 5
+  #define MO_enable 7
+  #define Amp_enable 8
+  #define PRF_pin 9
+  #define guide_pin 10
+  #define alarm_0 11
+  #define alarm_1 12
+
 
 #endif

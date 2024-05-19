@@ -20,6 +20,7 @@
 */
 
 #include "main.h"
+#include <Synrad48Ctrl.h>
 
 
 static CircularBuffer<GCode, BUFFERSIZE> commandBuffer;
@@ -32,8 +33,9 @@ XY2_100* galvo;
 SerialCMDReader *serialReciever;
 
 #ifdef LASER_IS_SYNRAD
-//Synrad48Ctrl syn;
+  //Synrad48Ctrl syn;
 #endif
+
 LaserController *laser;
 void setup() {
   serialReciever = new SerialCMDReader(&commandBuffer);
@@ -46,13 +48,20 @@ void setup() {
   pinMode(GALVO_SSR_OUT_PIN, OUTPUT);
   digitalWrite(GALVO_SSR_OUT_PIN,0);
 
-  #ifdef LASER_IS_SYNRAD
-  laser = new Synrad48Ctrl();
+  //#ifdef LASER_IS_SYNRAD{
+    //laser = new Synrad48Ctrl();
+    //laser->begin(LASER_PWM_OUT_PIN, LASER_SSR_OUT_PIN);
+  //} 
+  //#endif
+  #ifdef LASER_IS_FIBER{
+    laser = new FiberCtrl();
+    laser->begin(SHReg_Latch_PIN, Laser_Enable);
+  }
   #else
-  //implement PWMLaser
+    //implement PWMLaser
   #endif
-  laser->begin(LASER_PWM_OUT_PIN, LASER_SSR_OUT_PIN);
   //init Galvo Protocol
+  //i changed noting here but it throws errors O.O
   galvo = new XY2_100();
   galvo->begin(); //TODO:ADD define "Galvo has SSR" for galvo PSU
 
@@ -63,6 +72,7 @@ void setup() {
 
   Serial5.print("G28\n");
 }
+
 char* nextFWDMSG[150];
 void loop() {  
   if(Serial5.available())
@@ -101,10 +111,8 @@ void setGalvoPosition(double x, double y)
 
 void setLaserPower(double PWM)
 {
-  double tmp_PWMMin = LASER_MIN_PWM_PERCENT;
-  double tmp_Max = LASER_MAX;
-  int tmp_LaserRes = LASER_RESOLUTION;
-  double pinVal = map(PWM,0.0,tmp_Max,tmp_PWMMin,(exp2(tmp_LaserRes))+0.0);
+  double tmp_MAX = 50; //not sure about this but ill see soon enough
+  double pinVal = map(PWM,0.0,tmp_MAX,0,255);
   laser->update((int)pinVal);
 }
 

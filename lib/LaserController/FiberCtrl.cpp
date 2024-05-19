@@ -30,6 +30,7 @@
 #include <string.h>
 #include "FiberCtrl.h"
 #include <SPI.h>
+#include <Pins.h>
 
 
 //PeriodicTimer t2;
@@ -56,7 +57,7 @@ void FiberCtrl::update()
   handleLaser();
 }
 
-void FiberCtrl::begin(int ShReg_Data_PIN, int ShReg_Clock_PIN, int SHReg_Latch_PIN, int Laser_Latch, int Laser_Enable, int MO_enable, int Amp_enable, int PRF_pin, int guide_pin, int alarm_0, int alarm_1)
+void FiberCtrl::begin( int SHReg_Latch_PIN_a,int Laser_Enable_b) 
 {
   if(_isHalted)
   {
@@ -67,8 +68,7 @@ void FiberCtrl::begin(int ShReg_Data_PIN, int ShReg_Clock_PIN, int SHReg_Latch_P
     }
     else
     {
-      Laser_ShReg_Data_PIN = ShReg_Data_PIN ;
-      Laser_ShReg_Clock_PIN = ShReg_Clock_PIN;
+      //one day ill not use hard coded pins here, one day, not today
       Laser_SHReg_Latch_PIN = SHReg_Latch_PIN;
       Laser_Latch_PIN = Laser_Latch;
     
@@ -85,7 +85,7 @@ void FiberCtrl::begin(int ShReg_Data_PIN, int ShReg_Clock_PIN, int SHReg_Latch_P
 
       pinMode(Laser_SHReg_Latch_PIN, OUTPUT);
       pinMode(Laser_Latch_PIN, OUTPUT);
-      SPI.begin(); //look that im using the correct pins on the pcb
+      SPI.begin(); //look that im using the correct pins on the pcb //implicidly initialized the rest of the pins
 
       pinMode(Laser_Enable_PIN, OUTPUT);
       pinMode(MO_enable_PIN, OUTPUT);
@@ -157,7 +157,10 @@ void FiberCtrl::handleLaser()
     if(laserPower!=oldlaserPower)
       oldlaserPower = laserPower;
     if(laserPRF!=oldlaserPRF)
-      oldlaserPRF = laserPRF;
+      {
+        oldlaserPRF = laserPRF;
+        setPRF(laserPRF);
+      }
   }
   #ifdef PIN13_LED_INDICATES_LASER_READY
   else digitalWrite(13,0);
@@ -242,12 +245,14 @@ void FiberCtrl::handleLaser()
         {
           //laserState = 2;
           digitalWrite(Amp_enable_PIN,0);
+          setPower(0);
           laserState = 3;
         }
         else
           //if(!(Synrad48Ctrl::laser_Shutter))
           //TODO: FIX IMPLEMENTATION - Sync with LASER_ENABLED and add shutter to LaserController interface
           digitalWrite(Amp_enable_PIN,1);
+          setPower(laserPower);
           //else
             //this->set5kPWM();
         break;

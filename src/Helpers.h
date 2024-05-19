@@ -25,12 +25,12 @@
 #define BUFFERSIZE 50
 #define DEFAULT_FEEDRATE 100
 #define MAX_VAL 2147483630
-#define LASER_IS_SYNRAD
+#define LASER_IS_FIBER
 #define X_MAX_POS_MM 250
 #define Y_MAX_POS_MM 250
-#define LASER_MIN_PWM_PERCENT 10
-#define LASER_MAX 255
-#define LASER_RESOLUTION 12;
+//#define LASER_MIN_PWM_PERCENT 10
+//#define LASER_MAX 255
+//#define LASER_RESOLUTION 12;
 
   uint64_t nanos();
 

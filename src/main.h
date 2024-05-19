@@ -33,11 +33,13 @@
 #define MAIN_h
 
 #include <Arduino.h>
+#include <SPI.h>
 //#include <HardwareSerial.h>
 #include <CircularBuffer.h>
 #include <XY2_100.h>
 #include <LaserController.h>
-#include <Synrad48Ctrl.h>
+//#include <Synrad48Ctrl.h>
+#include <FiberCtrl.h>
 #include "Pins.h"
 #include "Helpers.h"
 #include "MotionMGR.h"
