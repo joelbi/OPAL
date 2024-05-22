@@ -21,6 +21,7 @@
 
 #include "main.h"
 #include <Synrad48Ctrl.h>
+#include <FiberCtrl.h>
 
 
 static CircularBuffer<GCode, BUFFERSIZE> commandBuffer;
@@ -42,8 +43,8 @@ void setup() {
   serialReciever->begin();
 
   // Init pins
-  pinMode(LASER_SSR_OUT_PIN, OUTPUT);
-  digitalWrite(LASER_SSR_OUT_PIN,0);
+  pinMode(LASER_ENABLE_PIN, OUTPUT);
+  digitalWrite(LASER_ENABLE_PIN,0);
 
   pinMode(GALVO_SSR_OUT_PIN, OUTPUT);
   digitalWrite(GALVO_SSR_OUT_PIN,0);
@@ -55,13 +56,12 @@ void setup() {
   //#endif
   #ifdef LASER_IS_FIBER{
     laser = new FiberCtrl();
-    laser->begin(SHReg_Latch_PIN, Laser_Enable);
+    laser->begin(SHIFT_REGISTER_LATCH_PIN,LASER_ENABLE_PIN);
   }
   #else
     //implement PWMLaser
   #endif
-  //init Galvo Protocol
-  //i changed noting here but it throws errors O.O
+  //init Galvo Protocol //i changed noting here but it throws errors O.O
   galvo = new XY2_100();
   galvo->begin(); //TODO:ADD define "Galvo has SSR" for galvo PSU
 

@@ -69,18 +69,18 @@ void FiberCtrl::begin( int SHReg_Latch_PIN_a,int Laser_Enable_b)
     else
     {
       //one day ill not use hard coded pins here, one day, not today
-      Laser_SHReg_Latch_PIN = SHReg_Latch_PIN;
-      Laser_Latch_PIN = Laser_Latch;
+      Laser_SHReg_Latch_PIN = SHIFT_REGISTER_LATCH_PIN;
+      Laser_Latch_PIN = POWER_LATCH_LASER_PIN;
     
-      Laser_Enable_PIN = Laser_Enable;
-      MO_enable_PIN = MO_enable;
-      Amp_enable_PIN = Amp_enable;
-      Laser_Guide_PIN;
+      Laser_Enable_PIN = Laser_Enable_b;
+      MO_enable_PIN =LASER_OSCILLATOR_ENABLE_PIN ;
+      Amp_enable_PIN = LASER_AMPLIFIER_ENABLE_PIN;
+      Laser_Guide_PIN = PILOT_LASER_PIN;
     // pin for setting pulse frequency
-      PRF_PIN = PRF_pin;
+      PRF_PIN = LASER_PRF_PIN;
 
-      alarm_0_PIN = alarm_0;
-      alarm_1_PIN = alarm_1;
+      alarm_0_PIN = LASER_STATUS_PIN1;
+      alarm_1_PIN = LASER_STATUS_PIN2;
 
 
       pinMode(Laser_SHReg_Latch_PIN, OUTPUT);

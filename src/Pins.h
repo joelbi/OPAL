@@ -24,20 +24,32 @@
 #ifndef PINS_H
   #define PINS_H
   
-  #define LASER_SSR_OUT_PIN 2
-  #define GALVO_SSR_OUT_PIN 3
-  #define LASER_PWM_OUT_PIN 6
-  //placeholderpin number, do chnage
-  
-  #define SHReg_Latch_PIN 1
-  #define Laser_Latch 4
-  #define Laser_Enable 5
-  #define MO_enable 7
-  #define Amp_enable 8
-  #define PRF_pin 9
-  #define guide_pin 10
-  #define alarm_0 11
-  #define alarm_1 12
+  //#define LASER_SSR_OUT_PIN not planing to use this, enable works similarly
+   
+  // pin 0 implicidly used with rx1
+  // pin 1 implicidly used with rx1
+  #define LASER_STATUS_PIN1 2
+  #define LASER_STATUS_PIN2 3
+  #define PILOT_LASER_PIN 4
+  #define POWER_LATCH_LASER_PIN 5
+  #define LASER_PRF_PIN 6 
+  #define LASER_AMPLIFIER_ENABLE_PIN 7
+  #define LASER_OSCILLATOR_ENABLE_PIN 8
+  #define LASER_ENABLE_PIN 9
+  #define SHIFT_REGISTER_LATCH_PIN 32
+  // pin 10 implicidly used with spi1 but not wired
+  // pin 11 implicidly used with spi1
+  // pin 12 implicidly used with spi1, but not wired
+  // pin 13 implicidly used with spi1
 
-
+  #define GALVO_SSR_OUT_PIN 15
+  // 16 unused
+  // sync pin 17 defined in xy2_100.cpp
+  // 18 unused
+  // x pin 19 defined in xy2_100.cpp
+  // 20 unused
+  // y pin 21 defined in xy2_100.cpp
+  // clock pin 22 defined in xy2_100.cpp
+  // 23 unused
+  #define LASER_PWM_OUT_PIN 
 #endif

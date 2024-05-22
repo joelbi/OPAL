@@ -30,7 +30,7 @@
 
 
 #define LASER_IS_FIBER
-#define LASER_IS_SYNRAD
+//#define LASER_IS_SYNRAD
 //#define LASER_RESOLUTION 12
 //#define LASER_PWM_MAX 50
 //#define LASER_G0_OFF_G1_ON

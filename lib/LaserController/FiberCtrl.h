@@ -108,7 +108,7 @@ void setPower(int Power){
     digitalWrite(Laser_SHReg_Latch_PIN, HIGH);
     //do i need a small delay here?
     digitalWrite(Laser_Latch_PIN, HIGH);
-     SPI.endTransaction();
+    SPI.endTransaction();
   }
 }
 
